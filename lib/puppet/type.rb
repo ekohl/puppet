@@ -6,6 +6,7 @@ require 'puppet/parameter'
 require 'puppet/util'
 require 'puppet/util/autoload'
 require 'puppet/metatype/manager'
+require 'puppet/node/environment'
 require 'puppet/util/errors'
 require 'puppet/util/log_paths'
 require 'puppet/util/logging'
@@ -1689,7 +1690,7 @@ class Type
     name = name.intern
 
     # If we don't have it yet, try loading it.
-    @providerloader.load(name) unless provider_hash.has_key?(name)
+    @providerloader.load(name, env = Puppet::Node::Environment.current) unless provider_hash.has_key?(name)
     provider_hash[name]
   end
 
